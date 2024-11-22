@@ -1,0 +1,88 @@
+{{ define "content" }}
+    <style>
+        .logged-in-info {
+            color: gray;
+            font-size: 0.9em;
+            float: right;
+            margin: 0;
+        }
+        .edit-delete-buttons {
+            margin-top: 5px;
+        }
+        .edit-delete-buttons button {
+            margin-right: 5px;
+        }
+    </style>
+    <h3 class="logged-in-info">logged in as {{ .LoggedInUser.Username }}</h3>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <p class="form-gray-text">
+            <label for="content">content:</label>
+            <textarea class="form-gray-text" id="content" name="content" rows="2" cols="30" required></textarea>
+        </p>
+        <p class="form-gray-text">
+            <label for="file">image:</label>
+            <input class="form-gray-text" type="file" id="file" name="file" accept="image/*">
+        </p>
+        <p class="form-gray-text">
+            <input type="submit" value="Upload">
+        </p>
+    </form>
+    <hr>
+
+    {{ range .Posts }}
+        <div class="post">
+            <span class="timestamp">{{ .Author.Username }} posted on {{ .Timestamp }}</span>
+            {{ if .ImageFilename }}
+            <img src="/image/{{ .ImageFilename }}" alt="image">
+            {{ end }}
+            <p class="text">{{ .Content }}</p>
+
+            {{ if or (eq .Author.ID $.LoggedInUser.ID) $.LoggedInUser.IsAdmin }}
+            <div class="edit-delete-buttons">
+                <button onclick="editPost({{ .ID }})">Edit</button>
+                <button onclick="deletePost({{ .ID }})">Delete</button>
+            </div>
+            {{ end }}
+        </div>
+        <hr>
+    {{ end }}
+
+    <script>
+        function editPost(postId) {
+            var newContent = prompt("Enter new content:");
+            if (newContent !== null) {
+                fetch('/update/' + postId, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'content=' + encodeURIComponent(newContent)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        response.text().then(text => alert('Error updating post: ' + text));
+                    }
+                })
+                .catch(error => alert('Error updating post: ' + error));
+            }
+        }
+
+        function deletePost(postId) {
+            if (confirm("Are you sure you want to delete this post?")) {
+                fetch('/delete/' + postId, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        response.text().then(text => alert('Error deleting post: ' + text));
+                    }
+                })
+                .catch(error => alert('Error deleting post: ' + error));
+            }
+        }
+    </script>
+{{ end }}

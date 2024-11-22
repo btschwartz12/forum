@@ -1,0 +1,12 @@
+version: 2
+sql:
+  - engine: "sqlite"
+    schema: "sql/schema.sql"
+    queries:
+      - "sql/posts.sql"
+      - "sql/users.sql"
+    gen:
+      go:
+        package: "db"
+        out: "."
+

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bliss's Forum</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0;
+            font-family: Arial, sans-serif;
+            background-image: url('/static/img/bg.gif');
+            background-repeat: repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 48px;
+            border-bottom: 1px solid #0f0;
+        }
+        h3 {
+            text-align: center;
+        }
+        /* Forum-style post layout */
+        .post {
+            margin: 20px 0;
+            width: 90%;
+            max-width: 800px;
+            text-align: left;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: rgba(132, 132, 132, 0.96);
+        }
+        .text {
+            font-size: 16px;
+            margin-top: 15px;
+            color: #0f0;
+            clear: both;
+        }
+        img {
+            max-width: 300px;
+            max-height: 200px;
+            height: auto;
+            margin-top: 10px;
+            display: block;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: rgb(167, 167, 167);
+            margin: 20px 0;
+            opacity: 0.5;
+        }
+        .sponsored {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            text-align: center;
+            color: #0f0;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+        }
+        .sponsored img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 5px;
+        }
+        .form-gray-text {
+            color: gray;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🙌 Bliss Forum 🙌</h1>
+    {{ block "content" . }}{{ end }}
+
+    <div class="sponsored">
+        <p>Sponsored by</p>
+        <img src="/static/img/sponsor.jpg" alt="sponsor">
+    </div>
+</body>
+</html>

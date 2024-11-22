@@ -1,0 +1,127 @@
+basePath: /
+definitions:
+  repo.User:
+    properties:
+      id:
+        type: integer
+      is_admin:
+        type: boolean
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Nothing to see here
+  title: An API
+  version: "1.0"
+paths:
+  /api/users:
+    get:
+      description: Get all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/repo.User'
+            type: array
+      security:
+      - Bearer: []
+      summary: Get all users
+      tags:
+      - users
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Create a user
+      parameters:
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Is Admin
+        in: formData
+        name: is_admin
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user id
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Create a user
+      tags:
+      - users
+    put:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Update a user
+      parameters:
+      - description: ID
+        in: formData
+        name: id
+        required: true
+        type: integer
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Is Admin
+        in: formData
+        name: is_admin
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user id
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: Update a user
+      tags:
+      - users
+  /api/users/{username}:
+    delete:
+      description: Delete a user
+      parameters:
+      - description: Username
+        in: path
+        name: username
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+      security:
+      - Bearer: []
+      summary: Delete a user
+      tags:
+      - users
+securityDefinitions:
+  Bearer:
+    description: Please provide a valid api token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
