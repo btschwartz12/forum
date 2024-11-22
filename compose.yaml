@@ -1,0 +1,18 @@
+services:
+  forum:
+    build: .
+    environment:
+      - FORUM_VAR_DIR=/app/var
+    env_file:
+      - .env
+    volumes:
+      - ./var:/app/var
+    command: ./app --port 8080 --public
+
+  cloudflared:
+    restart: unless-stopped
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+

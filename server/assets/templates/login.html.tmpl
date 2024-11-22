@@ -1,0 +1,65 @@
+{{ define "content" }}
+    <style>
+        .login-form {
+            position: fixed; /* Ensure it stays within the viewport */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(-50%, -50%); /* Adjust for element dimensions */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-form p {
+            margin: 10px 0;
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            background-color: #000;
+            color: #0f0;
+            text-align: center;
+        }
+
+        .login-form .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .login-form input[type="submit"] {
+            width: 150px;
+            padding: 10px;
+            font-size: 16px;
+            color: #000;
+            background-color: #0f0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background-color: #0a0;
+        }
+    </style>
+    <form method="POST" class="login-form">
+        <p>
+            <input type="text" id="username" name="username" placeholder="Username" required>
+        </p>
+        <p>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+        </p>
+        <div class="button-container">
+            <input type="submit" value="Login" formaction="/login">
+            {{ if .Public }}
+                <input type="submit" value="Signup" formaction="/signup">
+            {{ end }}
+        </div>
+    </form>
+{{ end }}
