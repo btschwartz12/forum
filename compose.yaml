@@ -9,10 +9,17 @@ services:
       - ./var:/app/var
     command: ./app --port 8080 --public
 
-  cloudflared:
-    restart: unless-stopped
-    image: cloudflare/cloudflared:latest
-    command: tunnel run
-    environment:
-      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    # not necessary
+    networks:
+      - site_network
+networks:
+  site_network:
+    external: true
+  #
+  # cloudflared:
+  #   restart: unless-stopped
+  #   image: cloudflare/cloudflared:latest
+  #   command: tunnel run
+  #   environment:
+  #     - TUNNEL_TOKEN=${TUNNEL_TOKEN}
 
